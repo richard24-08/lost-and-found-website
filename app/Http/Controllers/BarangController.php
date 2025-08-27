@@ -10,11 +10,11 @@ class BarangController extends Controller
     public function index()
     {
         $barangs = [
-            ['nama' => 'Dompet', 'lokasi' => 'Kantin'],
-            ['nama' => 'HP', 'lokasi' => 'Lapangan'],
+            ['id' => 1, 'nama' => 'Dompet', 'lokasi' => 'Kantin'],
+            ['id' => 2, 'nama' => 'HP', 'lokasi' => 'Lapangan'],
         ];
 
-        return view('barang.index', compact('barang'));
+        return view('barang.index', compact('barangs'));
     }
 
     // Form tambah barang
@@ -26,13 +26,13 @@ class BarangController extends Controller
     // Simpan barang baru
     public function store(Request $request)
     {
-        // validasi sederhana
+        // Validasi sederhana
         $request->validate([
             'nama' => 'required',
             'lokasi' => 'required',
         ]);
 
-        // sementara simpan dummy
+        // Sementara dummy (belum simpan DB)
         return redirect()->route('barang.index')
             ->with('success', 'Barang berhasil ditambahkan!');
     }
@@ -40,6 +40,17 @@ class BarangController extends Controller
     // Tampilkan detail barang
     public function show($id)
     {
-        return view('barang.show', ['id' => $id]);
+        $barangs = [
+            ['id' => 1, 'nama' => 'Dompet', 'lokasi' => 'Kantin'],
+            ['id' => 2, 'nama' => 'HP', 'lokasi' => 'Lapangan'],
+        ];
+
+        $barang = collect($barangs)->firstWhere('id', $id);
+
+        if (!$barang) {
+            abort(404, 'Barang tidak ditemukan');
+        }
+
+        return view('barang.show', compact('barang'));
     }
 }

@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    // Form login
-    public function login()
+    // Tampilkan form login
+    public function index()
     {
-        return view('auth.login');
+        return view('auth.login'); // pastikan ada file resources/views/auth/login.blade.php
     }
 
     // Proses login
@@ -20,38 +20,18 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        // sementara dummy login
-        if ($request->email === "admin@example.com" && $request->password === "123456") {
+        // Dummy check (nanti bisa ganti pakai DB)
+        if ($request->email === "richard@example.com" && $request->password === "123456") {
             return redirect()->route('barang.index')
-                ->with('success', 'Login berhasil!');
+                ->with('success', 'Berhasil login!');
         }
 
         return back()->with('error', 'Email atau password salah!');
     }
 
-    // Form register
-    public function register()
-    {
-        return view('auth.register');
-    }
-
-    // Proses register
-    public function doRegister(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ]);
-
-        return redirect()->route('login')
-            ->with('success', 'Registrasi berhasil, silakan login!');
-    }
-
     // Logout
     public function logout()
     {
-        return redirect()->route('login')
-            ->with('success', 'Berhasil logout!');
+        return redirect()->route('login')->with('success', 'Berhasil logout!');
     }
 }

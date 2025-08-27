@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    // Profil user
+    // Profil user (ambil dari user yang login)
     public function profile()
     {
-        $user = [
-            'nama' => 'Richard',
-            'email' => 'richard@example.com',
-        ];
-
+        $user = Auth::user(); // ambil user yang login
         return view('user.profile', compact('user'));
     }
 
@@ -21,8 +18,14 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'email' => 'required|email',
+            'name' => 'required|string|max:255', // di Laravel default kolomnya 'name'
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+        ]);
+
+        $user = Auth::user();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
 
         return redirect()->route('user.profile')
