@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
-    public function index()
+    // Form untuk login
+    public function login()
     {
         return view('auth.login'); // pastikan ada file resources/views/auth/login.blade.php
     }
 
-    // Proses login
+    // Proses waktu pengguna lagilogin
     public function doLogin(Request $request)
     {
         $request->validate([
@@ -27,6 +27,25 @@ class AuthController extends Controller
         }
 
         return back()->with('error', 'Email atau password salah!');
+    }
+
+    // Form buat register pengguna
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    // Proses register
+    public function doRegister(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        return redirect()->route('login')
+            ->with('success', 'Registrasi berhasil, silakan login!');
     }
 
     // Logout
