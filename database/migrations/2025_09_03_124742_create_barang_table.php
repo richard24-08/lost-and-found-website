@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * beberapa table ditambahkan hanya untuk sementara (siapatau dipakai)
      */
     public function up(): void
     {
         Schema::create('barang', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id();   
+            $table->string('lokasi_hilang');
+            $table->time('jam_ditemukan');
+            $table->string('nama_barang');
         });
     }
 
