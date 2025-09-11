@@ -10,7 +10,7 @@ class UserController extends Controller
     // Profil user (ambil dari user yang login)
     public function profile()
     {
-        $user = Auth::user(); // ambil user yang login
+        $user = Auth::user(); 
         return view('user.profile', compact('user'));
     }
 
@@ -18,15 +18,19 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255', // di Laravel default kolomnya 'name'
             'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'password' => 'nullable|min:6',
         ]);
 
         $user = Auth::user();
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+        $user->email = $request->email;
+
+        // kalau password diisi, update juga
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
 
         return redirect()->route('user.profile')
             ->with('success', 'Profil berhasil diperbarui!');

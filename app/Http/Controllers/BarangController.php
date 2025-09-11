@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    // Tampilkan semua barang
+    // Tampilkan semua barang dari database
     public function index()
     {
         $barangs = [
@@ -23,16 +23,21 @@ class BarangController extends Controller
         return view('barang.create');
     }
 
-    // Simpan barang baru
+    // Simpan barang baru ke database
     public function store(Request $request)
     {
-        // Validasi sederhana
         $request->validate([
-            'nama' => 'required',
-            'lokasi' => 'required',
+            'item_name' => 'required',
+            'location'  => 'required',
+            'time'      => 'required',
+            'category'  => 'required',
+            'brand'     => 'nullable',
+            'size'      => 'nullable',
+            'color'     => 'nullable',
         ]);
 
-        // Sementara dummy (belum simpan DB)
+        Barang::create($request->all());
+
         return redirect()->route('barang.index')
             ->with('success', 'Barang berhasil ditambahkan!');
     }
@@ -40,12 +45,7 @@ class BarangController extends Controller
     // Tampilkan detail barang
     public function show($id)
     {
-        $barang = [
-            ['id' => 1, 'nama' => 'Dompet', 'lokasi' => 'Kantin'],
-            ['id' => 2, 'nama' => 'HP', 'lokasi' => 'Lapangan'],
-        ];
-
-        $barang = collect($barangs)->firstWhere('id', $id);
+        $barang = Barang::find($id);
 
         if (!$barang) {
             abort(404, 'Barang tidak ditemukan');

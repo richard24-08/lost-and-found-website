@@ -4,7 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class barang extends Model
+class Barang extends Model
 {
-    //
+    protected $table = 'barang'; // nama tabel
+    protected $fillable = [
+        'item_name', 'location', 'time', 'category', 'brand', 'size', 'color'
+    ];
 }
