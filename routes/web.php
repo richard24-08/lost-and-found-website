@@ -28,5 +28,5 @@ Route::get('/barang/{id}', [BarangController::class, 'show'])->name('barang.show
 // =======================
 // User Routes
 // =======================
-Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+Route::get('/user/{userId}/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::post('/user/profile', [UserController::class, 'update'])->name('user.update');

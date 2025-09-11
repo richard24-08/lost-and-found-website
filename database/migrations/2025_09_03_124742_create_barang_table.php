@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('barang', function (Blueprint $table) {
             $table->id();   
-            $table->string('lokasi_hilang');
-            $table->time('jam_ditemukan');
-            $table->string('nama_barang');
+            $table->string('item_name');
+            $table->string('location');
+            $table->time('time');
+            $table->string('category');
+            $table->string('brand');
+            $table->string('size');
+            $table->string('color');
         });
     }
 
