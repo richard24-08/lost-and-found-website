@@ -24,9 +24,15 @@ Route::post('/register', [AuthController::class, 'doRegister'])->name('doRegiste
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // 🔹 logout sebaiknya pakai POST
 
 // =======================
+// Dashboard Routes
+// =======================
+Route::get('/dashboard', function () {
+    return view('dashboard'); // ini akan load resources/views/dashboard.blade.php
+})->name('dashboard');
+
+// =======================
 // Barang Routes
 // =======================
-// kalau rapi bisa pakai Route::resource
 Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
 Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
 Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
@@ -36,4 +42,4 @@ Route::get('/barang/{id}', [BarangController::class, 'show'])->name('barang.show
 // User Routes
 // =======================
 Route::get('/user/{userId}/profile', [UserController::class, 'profile'])->name('user.profile');
-Route::post('/user/{userId}/profile', [UserController::class, 'update'])->name('user.update'); // 🔹 tambahkan {userId} biar konsisten
+Route::post('/user/{userId}/profile', [UserController::class, 'update'])->name('user.update');

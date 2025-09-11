@@ -24,7 +24,7 @@ class AuthController extends Controller
         // cek ke database
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('barang.index')->with('success', 'Berhasil login!');
+            return redirect()->route('dashboard')->with('success', 'Berhasil login!');
         }
 
         return back()->with('error', 'Email atau password salah!');
