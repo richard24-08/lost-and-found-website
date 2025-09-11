@@ -2,90 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-box {
-            background: #fff;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
-            width: 350px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 6px 0 12px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        button {
-            width: 100%;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .alert {
-            padding: 10px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-        }
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
-<body>
-    <div class="login-box">
-        <h1>Login</h1>
+<body class="bg-gray-300 min-h-screen flex items-center justify-center">
 
-        {{-- Pesan sukses / error --}}
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+    <div class="bg-gray-300 rounded-lg p-8 flex space-x-10 shadow-lg w-full max-w-4xl">
 
-        @if(session('error'))
-            <div class="alert alert-error">{{ session('error') }}</div>
-        @endif
+        <!-- Bagian gambar -->
+        <div class="flex-1 flex items-center justify-center bg-gray-100 rounded-lg shadow-inner">
+            <div class="w-64 h-64 border-2 border-gray-500 flex items-center justify-center">
+                <span class="text-gray-500">Image Placeholder</span>
+            </div>
+        </div>
 
-        {{-- Form login --}}
-        <form action="{{ route('doLogin') }}" method="POST">
-            @csrf
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+        <!-- Form login -->
+        <div class="flex-1 bg-white rounded-lg p-8 shadow-md flex flex-col justify-center max-w-md">
+            <h1 class="text-xl font-bold mb-6 text-center">Welcome!</h1>
+            <form action="#" method="POST" class="space-y-4">
+                <input type="email" name="email" placeholder="Email" required 
+                    class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm" />
+                <input type="password" name="password" placeholder="Password" required 
+                    class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm" />
+                <button type="submit" 
+                    class="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300">Login</button>
+            </form>
+        </div>
 
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
-
-            <button type="submit">Login</button>
-        </form>
     </div>
+
 </body>
 </html>

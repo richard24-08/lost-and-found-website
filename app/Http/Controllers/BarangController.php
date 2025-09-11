@@ -40,7 +40,7 @@ class BarangController extends Controller
     // Tampilkan detail barang
     public function show($id)
     {
-        $barangs = [
+        $barang = [
             ['id' => 1, 'nama' => 'Dompet', 'lokasi' => 'Kantin'],
             ['id' => 2, 'nama' => 'HP', 'lokasi' => 'Lapangan'],
         ];
