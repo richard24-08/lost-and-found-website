@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Barang; // pastikan ada model Barang.php
 
 class BarangController extends Controller
 {
     // Tampilkan semua barang dari database
     public function index()
     {
-        $barangs = [
-            ['id' => 1, 'nama' => 'Dompet', 'lokasi' => 'Kantin'],
-            ['id' => 2, 'nama' => 'HP', 'lokasi' => 'Lapangan'],
-        ];
-
+        $barangs = Barang::all();
         return view('barang.index', compact('barangs'));
     }
 
