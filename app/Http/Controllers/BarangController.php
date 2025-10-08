@@ -17,12 +17,16 @@ class BarangController extends Controller
     // Form tambah barang
     public function create()
     {
-        return view('barang.create');
+        return view('barang.index');
     }
 
     // Simpan barang baru ke database
     public function store(Request $request)
     {
+
+
+        // Validasi 
+
         $request->validate([
             'item_name' => 'required',
             'location'  => 'required',
@@ -48,6 +52,6 @@ class BarangController extends Controller
             abort(404, 'Barang tidak ditemukan');
         }
 
-        return view('barang.show', compact('barang'));
+        return view('barang.index', compact('barang'));
     }
 }
