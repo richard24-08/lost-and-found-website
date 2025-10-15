@@ -43,3 +43,8 @@ Route::get('/barang/{id}', [BarangController::class, 'show'])->name('barang.show
 // =======================
 Route::get('/user/{userId}/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::post('/user/{userId}/profile', [UserController::class, 'update'])->name('user.update');
+
+use App\Http\Controllers\ReaditemController;
+
+Route::get('/lostitems', [ReaditemController::class, 'index']);
+
