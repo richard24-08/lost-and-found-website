@@ -30,18 +30,6 @@ Route::middleware(['auth'])->group(function () {
     // =======================
     Route::get('/dashboard', [ReportController::class, 'index'])->name('dashboard');
 
-<<<<<<< HEAD
-// =======================
-// User Routes
-// =======================
-Route::get('/user/{userId}/profile', [UserController::class, 'profile'])->name('user.profile');
-Route::post('/user/{userId}/profile', [UserController::class, 'update'])->name('user.update');
-
-use App\Http\Controllers\ReaditemController;
-
-Route::get('/lostitems', [ReaditemController::class, 'index']);
-
-=======
     // =======================
     // REPORT CRUD (Lost & Found)
     // =======================
@@ -80,4 +68,3 @@ Route::get('/lostitems', [ReaditemController::class, 'index']);
     Route::view('/profile', 'profile')->name('profile');
     Route::view('/my-report', 'myreport')->name('myreport');
 });
->>>>>>> 8504322 (ambil)
