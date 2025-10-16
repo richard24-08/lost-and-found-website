@@ -22,7 +22,7 @@
             <a href="#" class="bg-white text-black rounded px-3 py-2 font-medium">Home</a>
             <a href="#" class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
             <a href="#" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
-            <a href="#" class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
+            <a href="{{ route('report.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
             <a href="#" class="hover:bg-white hover:text-black rounded px-3 py-2">View All Reports</a>
         </nav>
 
@@ -48,6 +48,7 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">HOME</h1>
+<<<<<<< HEAD
             <button class="bg-black text-white px-4 py-2 rounded shadow hover:bg-gray-800">
                 + Report New Item
             </button>
@@ -104,6 +105,13 @@
             <div class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3M16 7V3M3 11h18M5 21h14a2 2 0 002-2v-7H3v7a2 2 0 002 2z"></path></svg>Date</div>
         </div>
         <button class="bg-black text-white py-2 rounded hover:bg-gray-800 mt-auto">View Details</button>
+=======
+            <a href="{{ route('report.create') }}">
+                <button class="bg-black text-white px-4 py-2 rounded shadow hover:bg-gray-800">
+                    + Report New Item
+                </button>
+            </a>
+>>>>>>> 8504322 (ambil)
         </div>
 
         <!-- Search Bar -->
@@ -136,56 +144,58 @@
         <h2 class="font-bold text-xl mb-4">Item Lists</h2>
 
         <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <!-- Card Item -->
-            <div class="bg-white rounded-xl border border-gray-200 p-6 shadow flex flex-col">
-                <div class="flex justify-between mb-3">
-                    <h3 class="font-semibold text-lg">Item Name</h3>
-                    <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm">Lost</span>
-                </div>
-                <p class="text-gray-600 mb-4 text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.
-                </p>
-                <div class="flex flex-col space-y-2 mb-4 text-gray-500 text-xs">
-                    <div class="flex items-center gap-2">
-                        <span>📂</span> Category
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span>📍</span> Location
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span>📅</span> Date
-                    </div>
-                </div>
-                <button class="bg-black text-white py-2 rounded hover:bg-gray-800 mt-auto">
-                    View Details
-                </button>
-            </div>
+            @foreach($reports as $report)
+                <div class="bg-white rounded-xl border border-gray-200 p-6 shadow flex flex-col">
+                    @if($report->image_path)
+                        <img src="{{ asset('storage/' . $report->image_path) }}" 
+                            alt="Report Image" class="rounded-lg mb-4 w-full h-48 object-cover">
+                    @endif
 
-            <!-- Duplicate Card -->
-            <div class="bg-white rounded-xl border border-gray-200 p-6 shadow flex flex-col">
-                <div class="flex justify-between mb-3">
-                    <h3 class="font-semibold text-lg">Item Name</h3>
-                    <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm">Lost</span>
+                    <div class="flex justify-between mb-3">
+                        <h3 class="font-semibold text-lg">{{ $report->reporter_name }}</h3>
+                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm">
+                            Found
+                        </span>
+                    </div>
+
+                    <p class="text-gray-600 mb-4 text-sm">
+                        Kondisi: {{ $report->condition }}
+                    </p>
+
+                    <div class="flex flex-col space-y-2 mb-4 text-gray-500 text-xs">
+                        <div class="flex items-center gap-2">
+                            <span>📍</span> {{ $report->location }}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span>📅</span> {{ \Carbon\Carbon::parse($report->time_found)->format('d M Y H:i') }}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 mt-auto">
+                        <!-- Tombol Edit -->
+                        <a href="{{ route('report.edit', $report->id) }}" 
+                            class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 w-1/2 text-center">
+                            Edit
+                        </a>
+
+                        <!-- Tombol Delete -->
+                        <form action="{{ route('report.destroy', $report->id) }}" method="POST" class="w-1/2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" 
+                                    onclick="return confirm('Yakin ingin menghapus report ini?')"
+                                    class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 w-full">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <p class="text-gray-600 mb-4 text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.
-                </p>
-                <div class="flex flex-col space-y-2 mb-4 text-gray-500 text-xs">
-                    <div class="flex items-center gap-2">
-                        <span>📂</span> Category
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span>📍</span> Location
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span>📅</span> Date
-                    </div>
-                </div>
-                <button class="bg-black text-white py-2 rounded hover:bg-gray-800 mt-auto">
-                    View Details
-                </button>
-            </div>
+            @endforeach
         </div>
+
+        @if($reports->isEmpty())
+            <p class="text-gray-500 text-center mt-6">Belum ada laporan.</p>
+        @endif
     </main>
 </div>
 

@@ -1,43 +1,36 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController; // 
 
 // =======================
-// Halaman utama -> arahkan ke login
+// Redirect root to login
 // =======================
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 // =======================
-// Auth Routes
+// AUTH ROUTES
 // =======================
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'doLogin'])->name('doLogin');
-
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/register', [AuthController::class, 'doRegister'])->name('doRegister');
-
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // 🔹 logout sebaiknya pakai POST
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('doLogin');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // =======================
-// Dashboard Routes
+// PROTECTED ROUTES (butuh login)
 // =======================
-Route::get('/dashboard', function () {
-    return view('dashboard'); // ini akan load resources/views/dashboard.blade.php
-})->name('dashboard');
+Route::middleware(['auth'])->group(function () {
 
-// =======================
-// Barang Routes
-// =======================
-Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
-Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
-Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
-Route::get('/barang/{id}', [BarangController::class, 'show'])->name('barang.show');
+    // =======================
+    // DASHBOARD
+    // =======================
+    Route::get('/dashboard', [ReportController::class, 'index'])->name('dashboard');
 
+<<<<<<< HEAD
 // =======================
 // User Routes
 // =======================
@@ -48,3 +41,43 @@ use App\Http\Controllers\ReaditemController;
 
 Route::get('/lostitems', [ReaditemController::class, 'index']);
 
+=======
+    // =======================
+    // REPORT CRUD (Lost & Found)
+    // =======================
+    Route::get('/report/create', [ReportController::class, 'create'])->name('report.create'); // Form tambah
+    Route::post('/report', [ReportController::class, 'store'])->name('report.store');          // Simpan data
+    Route::get('/report/{id}/edit', [ReportController::class, 'edit'])->name('report.edit');   // Form edit
+    // Route::put('/report/{id}', [ReportController::class, 'update'])->name('report.update');    // Update data
+    Route::put('/report/{report}', [ReportController::class, 'update'])->name('report.update');    // Update data
+    // Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy'); // Hapus data
+    Route::delete('/report/{report}', [ReportController::class, 'destroy'])->name('report.destroy'); // Hapus data
+
+    // =======================
+    // ITEMS (kalau kamu tetap mau ItemController)
+    // =======================
+    Route::prefix('items')->group(function () {
+        Route::get('/', [ItemController::class, 'index'])->name('items.index');
+        Route::get('/mine', [ItemController::class, 'myReports'])->name('items.mine');
+        Route::get('/create', [ItemController::class, 'create'])->name('items.create');
+        Route::post('/', [ItemController::class, 'store'])->name('items.store');
+        Route::get('/{id}', [ItemController::class, 'show'])->name('items.show');
+    });
+
+    // =======================
+    // USER PROFILE
+    // =======================
+    Route::prefix('user')->group(function () {
+        Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+        Route::post('/profile', [UserController::class, 'update'])->name('user.update');
+    });
+
+    // =======================
+    // STATIC PAGES (langsung view)
+    // =======================
+    Route::view('/report-new-item', 'reportnewitem')->name('reportnewitem');
+    Route::view('/item-detail', 'itemdetail')->name('itemdetail');
+    Route::view('/profile', 'profile')->name('profile');
+    Route::view('/my-report', 'myreport')->name('myreport');
+});
+>>>>>>> 8504322 (ambil)

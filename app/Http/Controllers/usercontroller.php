@@ -7,14 +7,24 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    // Profil user (ambil dari user yang login)
+    /**
+     * Display the logged-in user's profile page.
+     */
     public function profile()
     {
-        $user = Auth::user(); 
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login')
+                ->with('error', 'You must be logged in to view your profile.');
+        }
+
         return view('user.profile', compact('user'));
     }
 
-    // Update profil user
+    /**
+     * Update the user's profile information.
+     */
     public function update(Request $request)
     {
         $request->validate([
@@ -23,16 +33,26 @@ class UserController extends Controller
         ]);
 
         $user = Auth::user();
-        $user->email = $request->email;
 
-        // kalau password diisi, update juga
+        if (!$user) {
+            return redirect()->route('login')
+                ->with('error', 'You must be logged in to update your profile.');
+        }
+
+        /** @var \App\Models\User $user */ // membantu Intelephense kenali tipe $user
+
+        // Update email
+        $user->email = $request->input('email');
+
+        // Update password only if provided. Assign raw value;
+        // model akan memastikan hashing bila diperlukan.
         if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
+            $user->password = $request->input('password');
         }
 
         $user->save();
 
         return redirect()->route('user.profile')
-            ->with('success', 'Profil berhasil diperbarui!');
+            ->with('success', 'Profile updated successfully!');
     }
 }
