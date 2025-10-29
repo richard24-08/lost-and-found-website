@@ -2,14 +2,38 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 route::get('/login', function () {
     return view('login');
 })->name('login');
+
+route::get('/report-new-item', function () {
+    return view('repornewitem');
+})->name('reportnewitem');
+
+route::get('/item-detail', function () {
+    return view('itemdetail');
+})->name('itemdetail');
+
+route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
+
+route::get('/my-report', function () {
+    return view('myreport');
+})->name('myreport');
+
+route::get('/all-reports', function () {
+    return view('allreports');
+})->name('allreports');
+
+route::get('/admin1', function () {
+    return view('admin1');
+})->name('admin1');
