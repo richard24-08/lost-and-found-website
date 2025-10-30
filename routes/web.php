@@ -37,3 +37,7 @@ route::get('/all-reports', function () {
 route::get('/admin1', function () {
     return view('admin1');
 })->name('admin1');
+
+route::get('/admin2', function () {
+    return view('admin2');
+})->name('admin2');
