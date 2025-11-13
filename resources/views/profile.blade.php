@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-<aside class="w-64 bg-black text-white flex flex-col justify-between h-screen border-r border-blue-500">
+<aside class="fixed top-0 left-0 h-full w-64 bg-black text-white flex flex-col justify-between border-r-4 border-blue-500 overflow-auto z-40">
         <div class="w-full text-left px-4 py-5 font-bold text-lg border-b border-gray-800">
             <div class="flex items-center gap-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -21,10 +21,10 @@
 
     <nav class="flex flex-col items-center flex-grow space-y-4 text-center mt-6">
         <a href="#" class="w-full py-2 hover:bg-gray-800 transition">Home</a>
-        <a href="#" class="w-full py-2 hover:bg-gray-800 transition">My Profile</a>
         <a href="#" class="w-full py-2 bg-gray-900 rounded-md text-white font-semibold hover:bg-gray-800 transition">
-            + Report New Item
+            My Profile
         </a>
+        <a href="#" class="w-full py-2 hover:bg-gray-800 transition">Report New Item</a>
         <a href="#" class="w-full py-2 hover:bg-gray-800 transition">My Reports</a>
         <a href="#" class="w-full py-2 hover:bg-gray-800 transition">View All Reports</a>
     </nav>
@@ -43,20 +43,14 @@
         </div>
 </aside>
 
-    <main class="flex-1 p-8">
+    <main class="ml-64 p-6 min-h-screen">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div class="lg:col-span-1">
             <div class="bg-white rounded-lg shadow p-4">
             <div class="w-full h-80 bg-gray-100 rounded-md flex items-center justify-center border-4 border-blue-300 overflow-hidden">
                 <img src="/images/profile.jpg" alt="Profile photo" class="object-cover w-full h-full" />
             </div>
-            <div class="mt-4">
-                <label class="block text-sm font-medium mb-2">Update Photo</label>
-                <input type="file" class="block w-full text-sm text-gray-600" />
-            </div>
-            <div class="mt-4">
-                <button class="bg-black text-white px-4 py-2 rounded-md shadow">Update Photo</button>
-            </div>
+
             </div>
         </div>
         <div class="lg:col-span-2">

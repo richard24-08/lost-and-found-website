@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
-    
+<html lang="id"> 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -23,21 +22,29 @@
                 <span>Lost and Found</span>
             </div>
 
-            <nav class="mt-6 flex flex-col items-start px-6 space-y-3">
-                <a href="#" class="w-full text-left px-3 py-2 rounded bg-gray-900">Home</a>
-                <a href="#" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800 transition">My Profile</a>
-                <a href="#" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800 transition">My Reports</a>
-                <a href="#" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800 transition">+ Report New
-                    Item</a>
-                <a href="#" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800 transition">View All
-                    Reports</a>
+            <nav class="flex flex-col items-center flex-grow space-y-4 text-center mt-6">
+                <a href="#" class="w-full py-2 bg-gray-900 rounded-md text-white font-semibold hover:bg-gray-800 transition">
+                    Home
+                </a>
+                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">My Profile</a>
+                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">+ Report New Item</a>
+                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">My Reports</a>
+                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">View All Reports</a>
             </nav>
         </div>
 
-        <div class="w-full bg-gray-900 py-4 px-4 text-left border-t border-gray-800">
-            <div class="font-semibold">Richard Sebastian</div>
-            <div class="text-xs text-gray-400">imsebastian@gmail.com</div>
+        <div class="w-full bg-gray-900 py-4 px-4 text-left border-t border-gray-800 mt-auto">
+        <div class="font-semibold">Richard Sebastian</div>
+        <div class="text-xs text-gray-400">imsebastian@gmail.com</div>
+        <div class="mt-2">
+            <a href="#" class="inline-flex items-center gap-2 text-gray-300 hover:text-white">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+            Logout
+            </a>
         </div>
+    </div>
     </aside>
 
     <main class="flex-1 p-8 ml-64">

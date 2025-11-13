@@ -34,10 +34,10 @@ route::get('/all-reports', function () {
     return view('allreports');
 })->name('allreports');
 
-route::get('/admin1', function () {
-    return view('admin1');
-})->name('admin1');
-
 route::get('/admin2', function () {
     return view('admin2');
 })->name('admin2');
+
+route::get('/user-list', function () {
+    return view('userlist');
+})->name('userlist');
