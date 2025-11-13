@@ -84,7 +84,6 @@
                     ['name'=>'richard','birth'=>'02/02/07','contact'=>'08456789123','email'=>'Richard@gmail.com','status'=>'Student','dept'=>'SMK IMMA'],
                     ['name'=>'arsha','birth'=>'12/08/05','contact'=>'08123456789','email'=>'Arsha@gmail.com','status'=>'Student','dept'=>'SMK IMMA'],
                 ]);
-                    for ($i=0;$i<10;$i++) $users->push(['name'=>'user'.$i,'birth'=>'01/01/0'.$i,'contact'=>'0812'.$i.'345678','email'=>'user'.$i.'@example.com','status'=>'Student','dept'=>'SMK IMMA']);
                 }
             @endphp
 
@@ -94,9 +93,7 @@
                 <td class="py-3 px-4">{{ $u['birth'] ?? ($u->birth_date ?? '—') }}</td>
                 <td class="py-3 px-4">{{ $u['contact'] ?? ($u->phone ?? '—') }}</td>
                 <td class="py-3 px-4 break-words">{{ $u['email'] ?? ($u->email ?? '—') }}</td>
-                <td class="py-3 px-4">
-                <span class="inline-block bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">{{ $u['status'] ?? ($u->status ?? '—') }}</span>
-                </td>
+                <td class="py-3 px-4">{{ $u['status'] ?? ($u->status ?? '—') }}</td>
                 <td class="py-3 px-4">{{ $u['dept'] ?? ($u->department ?? '—') }}</td>
                 </tr>
             @endforeach
