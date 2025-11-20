@@ -1,4 +1,3 @@
-{{-- resources/views/item-detail.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
