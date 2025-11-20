@@ -18,11 +18,11 @@
       </div>
 
     <nav class="flex flex-col items-center flex-grow space-y-4 text-center mt-6">
-        <a href="#" class="w-full py-2 bg-gray-900 rounded-md text-white font-semibold hover:bg-gray-800 transition">
+        <a href="{{ route('admin2') ?? '#' }}" class="w-full py-2 bg-gray-900 rounded-md text-white font-semibold hover:bg-gray-800 transition">
             Home
         </a>
-        <a href="#" class="w-full py-2 hover:bg-gray-800 transition">User List</a>
-        <a href="#" class="w-full py-2 hover:bg-gray-800 transition">Report List</a>
+        <a href="{{ route('userlist') ?? '#' }}" class="w-full py-2 hover:bg-gray-800 transition">User List</a>
+        <a href="{{ route('reportlist') ?? '#' }}" class="w-full py-2 hover:bg-gray-800 transition">Report List</a>
     </nav>
     </div>
 

@@ -6,13 +6,13 @@ route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/home', function () {
-    return view('home');
-})->name('home');
-
 route::get('/login', function () {
     return view('login');
 })->name('login');
+
+route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 route::get('/report-new-item', function () {
     return view('repornewitem');
@@ -41,3 +41,7 @@ route::get('/admin2', function () {
 route::get('/user-list', function () {
     return view('userlist');
 })->name('userlist');
+
+route::get('/report-list', function () {
+    return view('reportlist');
+})->name('reportlist');

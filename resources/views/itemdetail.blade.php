@@ -1,3 +1,4 @@
+{{-- resources/views/item-detail.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +11,7 @@
 <body class="bg-gray-50 font-sans text-gray-800">
 
 <div class="max-w-7xl mx-auto p-6">
-    <a href="#" class="inline-flex items-center text-gray-700 mb-4 hover:underline">
-
+    <a href="{{ route('home') ?? '#' }}" class="inline-flex items-center text-gray-700 mb-4 hover:underline">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
         </svg>
@@ -132,7 +132,7 @@
                 Contact report
             </button>
 
-            <button onclick="actionClick('I found this item')" class="w-full inline-flex items-center justify-center gap-3 border border-gray-200 py-3 rounded-lg">
+            <button id="openFoundBtn" type="button" onclick="openFoundModal()" class="w-full inline-flex items-center justify-center gap-3 border border-gray-200 py-3 rounded-lg">
                 <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                 I found this item
             </button>
@@ -155,13 +155,144 @@
             </div>
         </div>
     </div>
-
     </div>
 
+        <div id="foundModal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
+        <div id="foundOverlay" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>
+
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-xl mx-4 p-6 z-10">
+            <div class="flex items-start justify-between mb-4">
+                <h3 class="text-xl font-semibold">You found this item ?</h3>
+                <button type="button" aria-label="Close" class="text-gray-500 hover:text-gray-800" onclick="closeFoundModal()">
+                    ✕
+                </button>
+            </div>
+
+            <form id="foundForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm font-medium">What's your name?</label>
+                        <input name="finder_name" type="text" required class="mt-1 w-full rounded border px-3 py-2" />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">Where do you found this item?</label>
+                        <input name="location" type="text" required class="mt-1 w-full rounded border px-3 py-2" />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">When do you find this item?</label>
+                        <input name="date_found" type="date" class="mt-1 w-full rounded border px-3 py-2" />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">What time?</label>
+                        <input name="time_found" type="time" class="mt-1 w-full rounded border px-3 py-2" />
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm font-medium">Please attach a photo of the item</label>
+                        
+                        <input type="file" id="file1" name="item_photo_1" accept="image/*" class="hidden" onchange="previewFile(this, 'preview1', 'placeholder1')"/>
+                        <input type="file" id="file2" name="item_photo_2" accept="image/*" class="hidden" onchange="previewFile(this, 'preview2', 'placeholder2')"/>
+
+                        <div class="mt-2 flex gap-2">
+                            <div onclick="document.getElementById('file1').click()" class="cursor-pointer w-20 h-20 border rounded overflow-hidden flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition duration-150">
+                                <img id="preview1" src="" alt="preview1" class="object-cover w-full h-full hidden" />
+                                <span id="placeholder1" class="text-xs text-gray-400">Preview</span>
+                            </div>
+                            <div onclick="document.getElementById('file2').click()" class="cursor-pointer w-20 h-20 border rounded overflow-hidden flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition duration-150">
+                                <img id="preview2" src="" alt="preview2" class="object-cover w-full h-full hidden" />
+                                <span id="placeholder2" class="text-xs text-gray-400">Preview</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm font-medium">Description</label>
+                        <textarea name="description" rows="4" class="mt-1 w-full rounded border px-3 py-2"></textarea>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 flex justify-center pt-2">
+                    <button type="submit" class="px-5 py-2 bg-black text-white rounded font-semibold w-1/2 md:w-1/3">
+                        Submit Report
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    
     <script>
     function actionClick(name){
         alert(name + ' clicked');
     }
     </script>
+
+    <script>
+    const foundModal = document.getElementById('foundModal');
+    const foundOverlay = document.getElementById('foundOverlay');
+
+    function openFoundModal() {
+        foundModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeFoundModal() {
+        foundModal.classList.add('hidden');
+        document.body.style.overflow = ''; 
+        resetFoundForm();
+    }
+
+    foundOverlay.addEventListener('click', closeFoundModal);
+
+    document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && !foundModal.classList.contains('hidden')) closeFoundModal();
+    });
+
+    function previewFile(inputEl, imgElId, placeholderId) {
+        const file = inputEl.files && inputEl.files[0];
+        const imgEl = document.getElementById(imgElId);
+        const placeholder = document.getElementById(placeholderId);
+        if (!file) {
+            imgEl.src = '';
+            imgEl.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imgEl.src = e.target.result;
+            imgEl.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    document.getElementById('foundForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+
+        alert('Report submitted (demo). Replace this with real POST to server.');
+        closeFoundModal();
+    });
+
+    function resetFoundForm(){
+        const form = document.getElementById('foundForm');
+        form.reset();
+        document.getElementById('preview1').classList.add('hidden');
+        document.getElementById('preview1').src = '';
+        document.getElementById('placeholder1').classList.remove('hidden');
+        document.getElementById('preview2').classList.add('hidden');
+        document.getElementById('preview2').src = '';
+        document.getElementById('placeholder2').classList.remove('hidden');
+    }
+    </script>
+
+</div>
 </body>
 </html>

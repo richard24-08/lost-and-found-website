@@ -23,13 +23,13 @@
             </div>
 
             <nav class="flex flex-col items-center flex-grow space-y-4 text-center mt-6">
-                <a href="#" class="w-full py-2 bg-gray-900 rounded-md text-white font-semibold hover:bg-gray-800 transition">
+                <a href="{{ route('home') ?? '#' }}" class="w-full py-2 bg-gray-900 rounded-md text-white font-semibold hover:bg-gray-800 transition">
                     Home
                 </a>
-                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">My Profile</a>
-                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">+ Report New Item</a>
-                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">My Reports</a>
-                <a href="#" class="w-full py-2 hover:bg-gray-800 transition">View All Reports</a>
+                <a href="{{ route('profile') ?? '#' }}" class="w-full py-2 hover:bg-gray-800 transition">My Profile</a>
+                <a href="{{ route('reportnewitem') ?? '#' }}" class="w-full py-2 hover:bg-gray-800 transition">+ Report New Item</a>
+                <a href="{{ route('myreport') ?? '#' }}" class="w-full py-2 hover:bg-gray-800 transition">My Reports</a>
+                <a href="{{ route('allreports') ?? '#' }}" class="w-full py-2 hover:bg-gray-800 transition">View All Reports</a>
             </nav>
         </div>
 
@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                <a href="#"
+                <a href="{{ route('itemdetail') ?? '#' }}"
                     class="mt-auto bg-black text-white py-3 rounded-md text-center hover:bg-gray-800 transition">View
                     Details</a>
             </article>
