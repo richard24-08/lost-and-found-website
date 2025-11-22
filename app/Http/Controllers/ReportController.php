@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,10 +14,11 @@ class ReportController extends Controller
     {
         $search = $request->input('search');
 
-        $reports = Report::where(function($query) use ($search) {
-            $query->where('item_name', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
-        })->paginate(10);
+        $reports = Report::when($search, function($query, $search) {
+                $query->where('item_name', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->paginate(10);
 
         return view('home', compact('reports', 'search'));
     }
@@ -67,22 +69,18 @@ class ReportController extends Controller
         return redirect()->route('home')->with('success', 'Laporan berhasil dibuat!');
     }
 
-    // Detail laporan
-    public function show($id)
+    // Detail laporan (menggunakan route model binding)
+    public function show(Report $report)
     {
-        $report = Report::findOrFail($id);
-
-        // Ambil user berdasarkan reporter_name
-        $user = \App\Models\User::where('name', $report->reporter_name)->first();
+        // Ambil user berdasarkan reporter_name (bisa null kalau user hilang)
+        $user = User::where('name', $report->reporter_name)->first();
 
         return view('itemdetail', compact('report', 'user'));
     }
 
     // Hapus laporan
-    public function destroy($id)
+    public function destroy(Report $report)
     {
-        $report = Report::findOrFail($id);
-
         if ($report->image_path) {
             Storage::disk('public')->delete($report->image_path);
         }
@@ -97,13 +95,6 @@ class ReportController extends Controller
     {
         $reports = Report::where('reporter_name', auth()->user()->name)->get();
         return view('myreport', compact('reports'));
-    }
-
-    // Item detail page
-    public function itemDetail($id)
-    {
-        $report = Report::findOrFail($id);
-        return view('itemdetail', compact('report'));
     }
 
     // Halaman semua laporan
