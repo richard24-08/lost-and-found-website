@@ -87,10 +87,6 @@
         </div>
         </div>
 
-<<<<<<< HEAD
-        <!-- description / about card -->
-=======
->>>>>>> 4579bda (update baru)
         <div class="bg-white rounded-lg shadow p-6 mb-6">
         <h3 class="text-2xl font-bold mb-3">Lost and Found</h3>
         <p class="text-gray-600">

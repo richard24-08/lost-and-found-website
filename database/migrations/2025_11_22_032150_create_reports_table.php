@@ -16,9 +16,11 @@ return new class extends Migration
 
             $table->string('item_name'); // nama barang
             $table->string('reporter_name'); // nama pelapor
+            $table->string('finder_name'); 
             $table->string('location'); // lokasi ditemukan/dilaporkan
             $table->string('last_seen');
-            $table->dateTime('time_found'); // waktu ditemukan
+            $table->dateTime('time_lost')->nullable(); ;// waktu dihilang
+            $table->dateTime('time_found')->nullable(); ;
 
             $table->text('description'); // deskripsi barang
             $table->string('category'); // kategori barang

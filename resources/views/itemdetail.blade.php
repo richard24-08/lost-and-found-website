@@ -7,6 +7,7 @@
 
 
 <script src="https://cdn.tailwindcss.com"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
@@ -68,11 +69,7 @@
                 <div>
                 <div class="text-xs text-gray-400">Date</div>
                 <div class="text-sm">
-                    @if ($report->report_type === 'lost')
-                        -
-                    @else
-                        {{ \Carbon\Carbon::parse($report->time_found)->format('d F Y') }}
-                    @endif
+                        {{ \Carbon\Carbon::parse($report->time_lost)->format('d F Y') }}
                 </div>
                 </div>
             </div>
@@ -129,15 +126,15 @@
             <div class="flex items-start space-x-3">
                 <div class="ml-4">  <!-- margin kiri untuk seluruh blok -->
                     <div class="text-xs text-gray-400 mb-1">👤 Reported by</div> <!-- kasih sedikit margin bawah -->
-                    <div class="font-semibold ml-5 mb-3">{{ $report->reporter_name }}</div> <!-- jarak bawah lebih besar -->
+                    <div class="font-semibold ml-5 mb-3">{{ $report->finder_name }}</div> <!-- jarak bawah lebih besar -->
 
                     <div class="text-sm text-gray-500 space-y-2 ml-5"> <!-- naikkan jarak antar email & phone -->
                         <div class="flex items-center">
-                            📩 {{ $user->email ?? '-' }}
+                            📩 {{ $finderUser->email ?? '-' }}
                         </div>
 
                         <div class="flex items-center">
-                            📞 {{ $user->phone_number ?? '-' }}
+                            📞 {{ $finderUser->phone_number ?? '-' }}
                         </div>
                     </div>
                 </div>
@@ -156,8 +153,10 @@
 
                 <!-- Button 2 -->
                 @if ($report->report_type === 'lost')
-                    <button id="openFoundBtn" type="button" onclick="openFoundModal()" 
-                        class="w-full inline-flex items-center justify-center gap-3 bg-black text-white py-3 rounded-lg shadow">
+                    <button id="openFoundBtn" type="button" 
+                            data-report-id="{{ $report->id }}"
+                            onclick="openFoundModal()" 
+                            class="w-full inline-flex items-center justify-center gap-3 bg-black text-white py-3 rounded-lg shadow">
                         ✅ I found this item
                     </button>
                 @endif
@@ -214,6 +213,7 @@
             </div>
 
             <form id="foundForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @csrf
                 <div class="space-y-4">
                     <div>
                         <label class="text-sm font-medium">What's your name?</label>
@@ -236,37 +236,11 @@
                     </div>
                 </div>
 
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-sm font-medium">Please attach a photo of the item</label>
-                        
-                        <input type="file" id="file1" name="item_photo_1" accept="image/*" class="hidden" onchange="previewFile(this, 'preview1', 'placeholder1')"/>
-                        <input type="file" id="file2" name="item_photo_2" accept="image/*" class="hidden" onchange="previewFile(this, 'preview2', 'placeholder2')"/>
-
-                        <div class="mt-2 flex gap-2">
-                            <div onclick="document.getElementById('file1').click()" class="cursor-pointer w-20 h-20 border rounded overflow-hidden flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition duration-150">
-                                <img id="preview1" src="" alt="preview1" class="object-cover w-full h-full hidden" />
-                                <span id="placeholder1" class="text-xs text-gray-400">Preview</span>
-                            </div>
-                            <div onclick="document.getElementById('file2').click()" class="cursor-pointer w-20 h-20 border rounded overflow-hidden flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition duration-150">
-                                <img id="preview2" src="" alt="preview2" class="object-cover w-full h-full hidden" />
-                                <span id="placeholder2" class="text-xs text-gray-400">Preview</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="text-sm font-medium">Description</label>
-                        <textarea name="description" rows="4" class="mt-1 w-full rounded border px-3 py-2"></textarea>
-                    </div>
-                </div>
-
                 <div class="md:col-span-2 flex justify-center pt-2">
                     <button type="submit" class="px-5 py-2 bg-black text-white rounded font-semibold w-1/2 md:w-1/3">
                         Submit Report
                     </button>
                 </div>
-                
             </form>
         </div>
     </div>
@@ -317,15 +291,6 @@
         reader.readAsDataURL(file);
     }
     
-    document.getElementById('foundForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        const form = e.target;
-        const data = new FormData(form);
-
-        alert('Report submitted (demo). Replace this with real POST to server.');
-        closeFoundModal();
-    });
-
     function resetFoundForm(){
         const form = document.getElementById('foundForm');
         form.reset();
@@ -337,6 +302,8 @@
         document.getElementById('placeholder2').classList.remove('hidden');
     }
     </script>
+    
+    <script src="{{ asset('js/found-modal.js') }}"></script>
 
 </div>
 </body>

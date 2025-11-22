@@ -70,4 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/report-new-item', 'reportnewitem')->name('reportnewitem');
     Route::get('/report/{report}', [ReportController::class, 'show'])->name('itemdetail');
     Route::view('/profile', 'profile')->name('profile');
+
+    // di web.php - pastikan ada route update
+    Route::put('/report/{report}', [ReportController::class, 'update'])->name('report.update');
 });
