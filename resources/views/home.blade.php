@@ -17,20 +17,11 @@
         </div>
 
         <nav class="flex flex-col mt-6 px-4 space-y-3">
-            <a href="{{ route('home') }}" 
-            class="bg-white text-black rounded px-3 py-2 font-medium">Home</a>
-
-            <a href="{{ route('profile') }}" 
-            class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
-
-            <a href="{{ route('report.mine') }}" 
-            class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
-
-            <a href="{{ route('report.create') }}" 
-            class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
-
-            <a href="{{ route('reports.all') }}" 
-            class="hover:bg-white hover:text-black rounded px-3 py-2">View All Reports</a>
+            <a href="{{ route('home') }}" class="bg-white text-black rounded px-3 py-2 font-medium">Home</a>
+            <a href="{{ route('user.profile') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
+            <a href="{{ route('report.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
+            <a href="{{ route('report.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
+            <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">View All Reports</a>
         </nav>
 
         <div class="mt-auto p-4 text-sm bg-[#151515] flex items-center justify-between rounded-t-lg">
@@ -38,11 +29,16 @@
                 <div class="font-medium">{{ auth()->user()->name }}</div>
                 <div class="text-xs text-gray-400">{{ auth()->user()->email }}</div>
             </div>
-            <a href="#" class="ml-2 text-white">
+            <a href="{{ route('logout') }}" 
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+               class="ml-2 text-white">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
             </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                @csrf
+            </form>
         </div>
     </aside>
 
@@ -118,7 +114,7 @@
                     </div>
 
                     <div class="flex gap-2 mt-auto">
-                        <a href="{{ route('itemdetail', $report->id) }}" 
+                        <a href="{{ route('report.show', $report->id) }}" 
                             class="bg-black text-white px-3 py-2 rounded w-full text-center hover:bg-gray-600 transition">
                             View Details
                         </a>

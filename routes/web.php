@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
 
 // =======================
-// Redirect root ke login
+// REDIRECT ROOT TO LOGIN
 // =======================
 Route::get('/', fn() => redirect()->route('login'));
 
@@ -24,29 +24,26 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
     // =======================
-    // DASHBOARD
+    // DASHBOARD & REPORTS
     // =======================
     Route::get('/home', [ReportController::class, 'index'])->name('home');
-
     Route::get('/reports/all', [ReportController::class, 'viewAllReports'])->name('reports.all');
-
-    // =======================
-    // REPORT CRUD (Lost & Found)
-    // =======================
-    Route::get('/report/create', [ReportController::class, 'create'])->name('report.create');
-    Route::post('/report', [ReportController::class, 'store'])->name('report.store');
-    Route::get('/report/{report}', [ReportController::class, 'show'])->name('report.show');
-    Route::get('/report/{report}/edit', [ReportController::class, 'edit'])->name('report.edit');
-    Route::put('/report/{report}', [ReportController::class, 'update'])->name('report.update');
-    Route::delete('/report/{report}', [ReportController::class, 'destroy'])->name('report.destroy');
-
-    // =======================
-    // MY REPORTS
-    // =======================
     Route::get('/my-report', [ReportController::class, 'myReports'])->name('report.mine');
 
     // =======================
-    // ITEMS (optional)
+    // REPORT CRUD
+    // =======================
+    Route::prefix('report')->group(function () {
+        Route::get('/create', [ReportController::class, 'create'])->name('report.create');
+        Route::post('/', [ReportController::class, 'store'])->name('report.store');
+        Route::get('/{report}', [ReportController::class, 'show'])->name('report.show');
+        Route::get('/{report}/edit', [ReportController::class, 'edit'])->name('report.edit');
+        Route::put('/{report}', [ReportController::class, 'update'])->name('report.update');
+        Route::delete('/{report}', [ReportController::class, 'destroy'])->name('report.destroy');
+    });
+
+    // =======================
+    // ITEMS (jika diperlukan)
     // =======================
     Route::prefix('items')->group(function () {
         Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -57,20 +54,25 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // =======================
-    // USER PROFILE
+    // USER PROFILE - ROUTES YANG DIPERBAIKI
     // =======================
     Route::prefix('user')->group(function () {
+        // Profile View
         Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
-        Route::post('/profile', [UserController::class, 'update'])->name('user.update');
+        
+        // Profile Edit Form
+        Route::get('/profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
+        
+        // Profile Update (General)
+        Route::put('/profile', [UserController::class, 'update'])->name('user.profile.update');
+        
+        // Profile Photo Update Only
+        Route::post('/profile/photo', [UserController::class, 'updatePhoto'])->name('user.profile.photo');
     });
 
-    // =======================
-    // STATIC VIEWS
-    // =======================
-    Route::view('/report-new-item', 'reportnewitem')->name('reportnewitem');
-    Route::get('/report/{report}', [ReportController::class, 'show'])->name('itemdetail');
-    Route::view('/profile', 'profile')->name('profile');
-
-    // di web.php - pastikan ada route update
-    Route::put('/report/{report}', [ReportController::class, 'update'])->name('report.update');
 });
+
+// =======================
+// CATCH-ALL REDIRECT (untuk route yang tidak ditemukan)
+// =======================
+Route::fallback(fn() => redirect()->route('home'));

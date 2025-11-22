@@ -6,6 +6,7 @@ use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -35,7 +36,7 @@ class ReportController extends Controller
         $request->validate([
             'item_name' => 'required|string|max:255',
             'reporter_name' => 'required|string|max:255',
-            'finder_name' => 'required|string|max:255',
+            'finder_name' => 'nullable|string|max:255',
             'location' => 'required|string|max:255',
             'last_seen' => 'required|string|max:255',
             'time_lost' => 'nullable|date',
@@ -58,18 +59,19 @@ class ReportController extends Controller
             return back()->withErrors(['time_found' => 'Waktu penemuan harus diisi untuk laporan penemuan.']);
         }
 
-        $imagePath = $request->hasFile('image')
-            ? $request->file('image')->store('reports', 'public')
-            : null;
+        $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('images'), $imageName);
+
+        $imagePath = $imageName;
 
         Report::create([
             'item_name' => $request->item_name,
             'reporter_name' => $request->reporter_name,
-            'finder_name' => $request->finder_name,
+            'finder_name' => $request->finder_name ?? 'Not Applicable', // ⬅️ INI YANG DIPERBAIKI
             'location' => $request->location,
             'last_seen' => $request->last_seen,
             'time_lost' => $request->time_lost,
-            'time_found' => $request->time_found,
+            'time_found' => $request->time_found ?? null,
             'description' => $request->description,
             'category' => $request->category,
             'brand' => $request->brand,
@@ -106,10 +108,18 @@ class ReportController extends Controller
         return redirect()->back()->with('success', 'Laporan berhasil dihapus');
     }
 
-    // Laporan milik user login
+    // Laporan milik user login - DIPERBAIKI
     public function myReports()
     {
-        $reports = Report::where('reporter_name', auth()->user()->name)->get();
+        $user = Auth::user();
+        
+        // Ambil reports yang berhubungan dengan user yang login
+        // Baik sebagai reporter (pelapor) maupun finder (penemu)
+        $reports = Report::where('reporter_name', $user->name)
+                    ->orWhere('finder_name', $user->name)
+                    ->latest()
+                    ->get();
+
         return view('myreport', compact('reports'));
     }
 
@@ -122,7 +132,7 @@ class ReportController extends Controller
 
     public function update(Request $request, Report $report)
     {
-         $request->validate([
+        $request->validate([
             'location' => 'required|string|max:255',
             'time_found' => 'required|date',
             'finder_name' => 'required|string|max:255',

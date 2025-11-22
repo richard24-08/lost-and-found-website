@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('status', ['Murid', 'Guru'])->nullable();
+            $table->string('department')->default('SMK Kristen Immanuel');
+            $table->date('birth_date')->nullable();
             $table->string('image_path')->nullable()->default('images/default_image.jpg');
             $table->rememberToken();
             $table->timestamps();

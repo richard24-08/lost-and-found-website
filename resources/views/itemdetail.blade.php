@@ -23,10 +23,20 @@
 
         <div class="lg:col-span-2 space-y-6">
         <div class="bg-white rounded-lg shadow p-3">
-            <img src="{{ asset($report->image_path) }}" alt="Item image"
-                class="w-full h-80 md:h-96 object-cover rounded-lg border-4 border-blue-300" />
-        </div>
 
+            <!-- Coba kedua path -->
+            @if(!empty($report->image_path))
+                <img src="{{ asset('images/' . $report->image_path) }}" 
+                    class="w-full h-80 md:h-96 object-cover rounded-lg" 
+                    alt="{{ $report->item_name }}"
+                    onerror="this.onerror=null; this.src='{{ asset($report->image_path) }}';">
+            @else
+                <div class="w-full h-80 md:h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                    <span class="text-gray-500">No Image Available</span>
+                </div>
+            @endif
+        </div>
+        
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-start justify-between">
             <div>
