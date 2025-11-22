@@ -8,6 +8,7 @@
 </head>
 <body class="bg-white font-sans min-h-screen flex">
 
+<<<<<<< HEAD
 <!-- Sidebar -->
 <aside class="w-64 bg-black text-white flex flex-col justify-between h-screen border-r border-blue-500">
     <!-- Bagian Atas -->
@@ -76,6 +77,75 @@
         <div id="preview" class="mb-6"></div>
 
         <!-- Submit -->
+=======
+    <aside class="w-80 bg-[#212121] text-white flex flex-col">
+        <div class="p-4 font-bold text-lg border-b border-gray-700">
+            Lost and Found
+        </div>
+
+        <nav class="flex flex-col mt-6 px-4 space-y-3">
+            <a href="{{ route('home') }}" 
+            class="hover:bg-white hover:text-black rounded px-3 py-2">Home</a>
+
+            <a href="{{ route('profile') }}" 
+            class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
+
+            <a href="{{ route('report.mine') }}" 
+            class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
+
+            <a href="{{ route('report.create') }}" 
+            class="bg-white text-black rounded px-3 py-2 font-medium">+ Report New Item</a>
+
+            <a href="{{ route('reports.all') }}" 
+            class="hover:bg-white hover:text-black rounded px-3 py-2">View All Reports</a>
+        </nav>
+
+        <div class="mt-auto p-4 text-sm bg-[#151515] flex items-center justify-between rounded-t-lg">
+            <div>
+                <div class="font-medium">{{ auth()->user()->name }}</div>
+                <div class="text-xs text-gray-400">{{ auth()->user()->email }}</div>
+            </div>
+            <a href="#" class="ml-2 text-white">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-10">
+    <h1 class="text-3xl font-extrabold mb-6">Hey, You found something new ?</h1>
+
+    <form class="max-w-3xl">
+        <label class="block mb-2 font-medium">Reporter name:</label>
+        <input type="text" placeholder="Enter Your answer*" 
+        class="w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm mb-5 focus:ring-2 focus:ring-black outline-none" />
+
+        <label class="block mb-2 font-medium">Where did you found this item:</label>
+        <input type="text" placeholder="Enter Your answer*" 
+        class="w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm mb-5 focus:ring-2 focus:ring-black outline-none" />
+
+        <label class="block mb-2 font-medium">What is the condition of this item:</label>
+        <input type="text" placeholder="Enter Your answer*" 
+        class="w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm mb-5 focus:ring-2 focus:ring-black outline-none" />
+
+        <label class="block mb-2 font-medium">What time did you found this item:</label>
+        <input type="datetime-local" 
+        class="w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm mb-5 focus:ring-2 focus:ring-black outline-none" />
+
+        <label class="block mb-2 font-medium">Please upload some picture of the item:</label>
+        <div class="border border-gray-300 rounded-md px-4 py-3 shadow-sm mb-6 flex items-center space-x-3 cursor-pointer bg-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-6-4v8m0-8l-3 3m3-3l3 3M4 8h16M4 8l4-4m12 4l-4-4" />
+        </svg>
+        <span class="text-gray-600">Upload image</span>
+        <input type="file" id="imageInput" accept="image/*" class="hidden" />
+        </div>
+
+        <div id="preview" class="mb-6"></div>
+
+>>>>>>> 4579bda (update baru)
         <button type="submit" 
         class="bg-black text-white py-3 px-8 rounded-lg shadow hover:bg-gray-800 transition">
         Submit
@@ -83,7 +153,10 @@
     </form>
 </main>
 
+<<<<<<< HEAD
     <!-- JS Preview -->
+=======
+>>>>>>> 4579bda (update baru)
     <script>
     const fileInput = document.getElementById('imageInput');
     const preview = document.getElementById('preview');

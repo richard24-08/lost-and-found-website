@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+<<<<<<< HEAD
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController; // 
@@ -12,6 +13,15 @@ use App\Http\Controllers\ReportController; //
 Route::get('/', function () {
     return redirect()->route('login');
 });
+=======
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
+
+// =======================
+// Redirect root ke login
+// =======================
+Route::get('/', fn() => redirect()->route('login'));
+>>>>>>> 4579bda (update baru)
 
 // =======================
 // AUTH ROUTES
@@ -21,6 +31,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('doLogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // =======================
+<<<<<<< HEAD
 // PROTECTED ROUTES (butuh login)
 // =======================
 Route::middleware(['auth'])->group(function () {
@@ -68,3 +79,30 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/profile', 'profile')->name('profile');
     Route::view('/my-report', 'myreport')->name('myreport');
 });
+=======
+// PROTECTED ROUTES
+// =======================
+Route::middleware(['auth'])->group(function () {
+
+    // HOME (Dashboard User)
+    Route::get('/home', [ReportController::class, 'index'])->name('home');
+
+    // VIEW ALL Reports (non-filtered)
+    Route::get('/reports/all', [ReportController::class, 'viewAllReports'])->name('reports.all');
+
+    // REPORT CRUD
+    Route::get('/report/create', [ReportController::class, 'create'])->name('report.create');
+    Route::post('/report', [ReportController::class, 'store'])->name('report.store');
+    Route::get('/report/{id}', [ReportController::class, 'show'])->name('itemdetail'); // <-- Ganti disini!
+    Route::get('/report/{id}/edit', [ReportController::class, 'edit'])->name('report.edit');
+    Route::put('/report/{id}', [ReportController::class, 'update'])->name('report.update');
+    Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy');
+
+    // REPORT yang dimiliki user login
+    Route::get('/my-report', [ReportController::class, 'myReports'])->name('report.mine');
+
+    // USER PROFILE
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::post('/profile', [UserController::class, 'update'])->name('update');
+});
+>>>>>>> 4579bda (update baru)

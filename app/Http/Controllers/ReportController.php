@@ -8,94 +8,108 @@ use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
-    //Tampilkan daftar laporan
-    public function index()
+    // Dashboard + Search fitur
+    public function index(Request $request)
     {
-        $reports = Report::latest()->get();
-        return view('dashboard', compact('reports'));
+        $search = $request->input('search');
+
+        $reports = Report::where(function($query) use ($search) {
+            $query->where('item_name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        })->paginate(10);
+
+        return view('home', compact('reports', 'search'));
     }
 
-    //Form tambah report baru
+    // Form tambah laporan
     public function create()
     {
         return view('reportnewitem');
     }
 
-    //Simpan report baru
+    // Simpan laporan baru
     public function store(Request $request)
     {
         $request->validate([
+            'item_name' => 'required|string|max:255',
             'reporter_name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
-            'condition' => 'required|string|max:255',
-            'time_found' => 'required|date',
-            'image' => 'nullable|image|max:2048',
+            'last_seen' => 'required|string|max:255',
+            'time_found' => 'required',
+            'description' => 'required',
+            'category' => 'required|string|max:100',
+            'brand' => 'nullable|string|max:100',
+            'size' => 'nullable|string|max:50',
+            'color' => 'nullable|string|max:50',
+            'report_type' => 'required|string|max:50',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:3000',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('reports', 'public');
-        }
+        $imagePath = $request->hasFile('image')
+            ? $request->file('image')->store('reports', 'public')
+            : null;
 
         Report::create([
+            'item_name' => $request->item_name,
             'reporter_name' => $request->reporter_name,
             'location' => $request->location,
-            'condition' => $request->condition,
+            'last_seen' => $request->last_seen,
             'time_found' => $request->time_found,
+            'description' => $request->description,
+            'category' => $request->category,
+            'brand' => $request->brand,
+            'size' => $request->size,
+            'color' => $request->color,
+            'report_type' => $request->report_type,
             'image_path' => $imagePath,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Report berhasil dikirim!');
+        return redirect()->route('home')->with('success', 'Laporan berhasil dibuat!');
     }
 
-    //Form edit report
-    public function edit($id)
+    // Detail laporan
+    public function show($id)
     {
         $report = Report::findOrFail($id);
-        return view('reportedit', compact('report'));
+
+        // Ambil user berdasarkan reporter_name
+        $user = \App\Models\User::where('name', $report->reporter_name)->first();
+
+        return view('itemdetail', compact('report', 'user'));
     }
 
-    //Update report
-    public function update(Request $request, Report $report)
+    // Hapus laporan
+    public function destroy($id)
     {
-        $request->validate([
-            'reporter_name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'condition' => 'required|string|max:255',
-            'time_found' => 'required|date',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        $report = Report::findOrFail($id);
 
-        // $report = Report::findOrFail($id);
-
-        $imagePath = $report->image_path;
-        if ($request->hasFile('image')) {
-            if ($report->image_path) {
-                Storage::disk('public')->delete($report->image_path);
-            }
-            $imagePath = $request->file('image')->store('reports', 'public');
-        }
-
-        $report->update([
-            'reporter_name' => $request->reporter_name,
-            'location' => $request->location,
-            'condition' => $request->condition,
-            'time_found' => $request->time_found,
-            'image_path' => $imagePath,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Report berhasil diperbarui!');
-    }
-
-    //Hapus report
-    public function destroy(Request $request, Report $report)
-    {
-        // $report = Report::findOrFail($id);
         if ($report->image_path) {
             Storage::disk('public')->delete($report->image_path);
         }
+
         $report->delete();
 
-        return redirect()->route('dashboard')->with('success', 'Report berhasil dihapus!');
+        return redirect()->back()->with('success', 'Laporan berhasil dihapus');
+    }
+
+    // Laporan milik user login
+    public function myReports()
+    {
+        $reports = Report::where('reporter_name', auth()->user()->name)->get();
+        return view('myreport', compact('reports'));
+    }
+
+    // Item detail page
+    public function itemDetail($id)
+    {
+        $report = Report::findOrFail($id);
+        return view('itemdetail', compact('report'));
+    }
+
+    // Halaman semua laporan
+    public function viewAllReports()
+    {
+        $reports = Report::latest()->get();
+        return view('viewallreports', compact('reports'));
     }
 }

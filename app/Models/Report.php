@@ -10,10 +10,8 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'reporter_name',
-        'location',
-        'condition',
-        'time_found',
-        'image_path'
+        'item_name', 'reporter_name', 'location', 'last_seen','time_found',
+        'description', 'category', 'brand', 'size', 'color',
+        'image_path', 'report_type',
     ];
 }
