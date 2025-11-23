@@ -14,17 +14,17 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <!-- Kotak Hitam - Diperbesar -->
+
     <div class="bg-black my-16 mx-6 rounded-2xl p-20 flex space-x-16 w-[1600px] h-[900px] max-w-full justify-center items-center">
 
-        <!-- Bagian Logo - Diperbesar -->
+
         <div class="bg-white rounded-lg p-12 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-[500px] h-[500px] flex items-center justify-center">
             <img src="{{ asset('images/logo.png') }}"
             alt="Logo" 
             class="w-[450px] h-[450px] object-contain">
         </div>
 
-        <!-- Form Login - Diperbesar -->
+
         <div class="bg-white rounded-lg p-12 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-[500px] h-[500px] flex flex-col justify-center">
             <h1 class="text-4xl font-bold mb-12 text-center">Welcome!</h1>
             <form action="{{ route('doLogin') }}" method="POST" class="space-y-8">

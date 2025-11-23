@@ -59,11 +59,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [ReportController::class, 'create'])->name('reports.create');
         Route::post('/', [ReportController::class, 'store'])->name('reports.store');
 
-        // 🔥 Route khusus HARUS ADA DI ATAS route {report}
+
         Route::get('/my-reports', [ReportController::class, 'myReports'])->name('reports.mine');
         Route::get('/all', [ReportController::class, 'viewAllReports'])->name('reports.all');
 
-        // 🔥 Route dinamis letakkan PALING BAWAH
+
         Route::get('/{report}', [ReportController::class, 'show'])->name('reports.show');
         Route::get('/{report}/edit', [ReportController::class, 'edit'])->name('reports.edit');
         Route::put('/{report}', [ReportController::class, 'update'])->name('reports.update');

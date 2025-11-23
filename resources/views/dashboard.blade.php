@@ -30,7 +30,7 @@
 
 <div class="flex h-screen">
 
-  <!-- Sidebar - Design seperti user -->
+
   <aside class="w-80 bg-[#212121] text-white flex flex-col sticky top-0 h-screen shadow-[4px_0_4px_0_rgba(0,0,0,0.25)]">
     <div class="p-4 font-bold text-3xl border-b border-gray-700 text-center">
         Lost and Found
@@ -64,7 +64,7 @@
       <p class="text-gray-808080 text-2xl">Welcome, {{ Auth::user()->name }} ({{ Auth::user()->status }})</p>
     </header>
 
-    <!-- Search Bar - Rounded 10px -->
+    
     <div class="mb-6">
       <input id="globalSearch" type="text" placeholder="Search Items..." 
           class="w-full max-w-xl rounded-lg px-6 py-3 border border-gray-300 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] focus:outline-none focus:ring-2 focus:ring-black text-2xl">
@@ -175,18 +175,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  // Data untuk line chart (Reports Over Time) - REAL DATA
+ 
   const lineLabels = {!! json_encode($reportsOverTime->pluck('date')) !!};
   const lineData = {!! json_encode($reportsOverTime->pluck('count')) !!};
 
-  // Data untuk pie chart (Categories)
   const pieLabels = {!! json_encode($reportCategories->pluck('category')) !!};
   const pieData = {!! json_encode($reportCategories->pluck('count')) !!};
 
-  // Colors untuk charts
   const colors = ['#06b6d4', '#ef4444', '#8b5cf6', '#f59e0b', '#10b981', '#f97316'];
 
-  // Line Chart - REAL DATA
   const ctxL = document.getElementById('lineChart');
   if (ctxL) {
     new Chart(ctxL, {

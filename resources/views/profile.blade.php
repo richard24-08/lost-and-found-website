@@ -38,7 +38,7 @@
             <a href="{{ route('reports.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">My Reports</a>
             <a href="{{ route('reports.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">+ Report New Item</a>
             
-            <!-- View All Reports untuk USER BIASA (hanya lihat) -->
+
             <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">View All Reports</a>
         </nav>
 
@@ -75,10 +75,9 @@
         @endif
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <!-- Photo Profile - Height sama dengan card Personal Information -->
+
             <div class="lg:col-span-1 flex items-center justify-center">
                 <div class="w-full h-full">
-                    <!-- Menggunakan image_path yang sudah ada -->
                     <img src="{{ auth()->user()->image_path ? asset('storage/' . auth()->user()->image_path) : asset('images/default_image.jpg') }}" 
                     alt="Profile photo" 
                     class="w-full h-full max-h-[600px] object-cover rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]" />
@@ -110,7 +109,7 @@
                             <div class="col-span-2">: {{ auth()->user()->department }}</div>
                         </div>
 
-                        <!-- Form Update Photo - Sejajar kiri -->
+
                         <form action="{{ route('profile.photo') }}" method="POST" enctype="multipart/form-data" class="mt-8">
                             @csrf
                             <div class="text-left">

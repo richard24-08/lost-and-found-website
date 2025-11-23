@@ -38,7 +38,7 @@
             <a href="{{ route('reports.mine') }}" class="bg-white text-black rounded px-3 py-2 font-medium text-center text-xl">My Reports</a>
             <a href="{{ route('reports.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">+ Report New Item</a>
             
-            <!-- View All Reports untuk USER BIASA (hanya lihat) -->
+
             <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">View All Reports</a>
         </nav>
 

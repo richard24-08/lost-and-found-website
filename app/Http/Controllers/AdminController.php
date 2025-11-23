@@ -60,7 +60,7 @@ class AdminController extends Controller
             'totalUsers',
             'totalReports', 
             'lostReports',
-            'foundReports', // GANTI $resolvedReports dengan $foundReports
+            'foundReports',
             'reportsOverTime',
             'reportCategories',
             'recentReports',

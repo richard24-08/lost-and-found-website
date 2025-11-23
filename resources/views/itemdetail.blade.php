@@ -25,9 +25,9 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
 
-        <!-- Left Column - Lebar 3/4 -->
+
         <div class="xl:col-span-3 space-y-8">
-            <!-- Image Section - Diperbesar -->
+
             <div class="rounded-lg">
                 @if(!empty($report->image_path))
                     <img src="{{ asset('images/' . $report->image_path) }}" 
@@ -41,7 +41,7 @@
                 @endif
             </div>
             
-            <!-- Main Content Card - Diperbesar -->
+
             <div class="bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-10">
                 <div class="flex items-start justify-between">
                     <div class="flex-1">
@@ -136,9 +136,9 @@
             </div>
         </div>
 
-        <!-- Right Column - Lebar 1/4 (Diperkecil) -->
+       
         <div class="xl:col-span-1 space-y-6">
-            <!-- Reported By Card - Diperkecil -->
+
             <div class="bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-5">
                 <div class="flex items-start">
                     <div class="w-full">
@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- Actions Card - Diperkecil -->
+
             <div class="bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-5">
                 <h4 class="text-xl font-medium text-black mb-4">Actions</h4>
                 <div class="space-y-3">
@@ -188,12 +188,12 @@
                 </div>
             </div>
 
-            <!-- Report Status Card - Diperkecil -->
+
             <div class="bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] p-5">
                 <h4 class="text-xl font-medium text-black mb-4">Report Status</h4>
 
                 <div class="flex items-center gap-3">
-                    <!-- Warna bulat berdasarkan report_type -->
+
                     <span class="inline-block w-3 h-3 rounded-full 
                         {{ $report->report_type === 'lost' ? 'bg-red-500' : 'bg-green-500' }}">
                     </span>
@@ -218,7 +218,7 @@
         </div>
     </div>
 
-    <!-- Modal - Diperlebar -->
+
     <div id="foundModal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
         <div id="foundOverlay" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>
 

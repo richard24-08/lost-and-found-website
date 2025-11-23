@@ -21,7 +21,7 @@
 </head>
 <body class="bg-white font-sans min-h-screen flex text-xl">
 
-    <!-- Sidebar dengan fixed height -->
+
     <aside class="w-80 bg-[#212121] text-white flex flex-col sticky top-0 h-screen shadow-[4px_0_4px_0_rgba(0,0,0,0.25)]">
         <div class="p-4 font-bold text-3xl border-b border-gray-700 text-center">
             Lost and Found
@@ -33,7 +33,7 @@
             <a href="{{ route('reports.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">My Reports</a>
             <a href="{{ route('reports.create') }}" class="bg-white text-black rounded px-3 py-2 font-medium text-center text-xl">+ Report New Item</a>
             
-            <!-- View All Reports untuk USER BIASA (hanya lihat) -->
+
             <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 text-center text-xl">View All Reports</a>
         </nav>
 

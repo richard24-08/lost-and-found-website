@@ -30,7 +30,7 @@
 
 <div class="flex h-screen">
 
-  <!-- Sidebar - Design seperti user -->
+
   <aside class="w-80 bg-[#212121] text-white flex flex-col sticky top-0 h-screen shadow-[4px_0_4px_0_rgba(0,0,0,0.25)]">
     <div class="p-4 font-bold text-3xl border-b border-gray-700 text-center">
         Lost and Found
@@ -65,7 +65,7 @@
         <p class="text-2xl text-gray-808080">Review and manage Registered user</p>
     </div>
 
-    <!-- Search Bar - Rounded 10px -->
+
     <div class="mb-6">
         <input id="globalSearch" type="text" placeholder="Search..."
             class="w-full max-w-2xl rounded-lg px-6 py-3 border border-gray-300 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] focus:outline-none focus:ring-2 focus:ring-black text-2xl" />
