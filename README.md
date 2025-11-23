@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+# README STS
+
 # Lost and Found Website
 This website is designed to help students easily report and find lost or left-behind items within the school environment.
 
@@ -50,64 +51,190 @@ This website is designed to help students easily report and find lost or left-be
 
 ## Contribution
 We welcome anyone who is interested in contributing to the `Lost and Found Website` to help make it better, more useful, and engaging. Every idea, suggestion, or improvement is highly appreciated!
-=======
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# README SAS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Lost and Found Website
+This website is designed to help students easily report and find lost or left-behind items within the school environment.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
+- **Authentication System** - Login and logout functionality
+- **Role-based Access** - Admin and regular user roles
+- **Item Reporting** - Report lost or found items with detailed information
+- **Search Functionality** - Search items by name, description, or location
+- **User Management** - Admin can manage users and reports
+- **Profile Management** - Users can update their profiles and photos
 
-## Learning Laravel
+## Technologies
+- **Backend**: Laravel and Javascript
+- **Frontend**: Blade Templates and Tailwind CSS
+- **Database**: MySQL (phpMyAdmin)
+- **Icons**: Font Awesome
+- **Charts**: Chart.js
+- **Development**: Laragon and Visual Studio Code
+- **Design**: Figma
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Project Structure
+- `Controllers`
+  - AuthController
+  - ReportController
+  - UserController
+  - AdminController
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `Models`
+  - User
+  - Report
 
-## Laravel Sponsors
+- `Migrations`
+  - create_users_table
+  - create_reports_table
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- `Views (Blade)`
+  - auth/login.blade.php
 
-### Premium Partners
+    *Admin*
+    - dashboard.blade.php
+    - userlist.blade.php
+    - reportlist.blade.php
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+    *User*
+    - home.blade.php
+    - itemdetail.blade.php
+    - myreport.blade.php
+    - profile.blade.php
+    - reportnewitem.blade.php
+    - viewallreports.blade.php
 
-## Contributing
+- `Middleware`
+    - CheckAdmin.php
+  
+- `Seeder`
+    - DatabaseSeeder
+    - ReportSeeder
+    - UserSeeder
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- `Routing`
+  - routes/web.php
 
-## Code of Conduct
+- `Styling`
+  - Tailwind CSS is used for styling and layout. 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Database Setup
 
-## Security Vulnerabilities
+### 1. Environment Configuration
+Update your `.env` file with database credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=projectweb_lnf
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Database Migration
+Run the following commands to set up the database:
+```bash
+# Create database tables
+php artisan migrate
 
-## License
+# Seed with sample data (optional)
+php artisan db:seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> 4579bda (update baru)
+# Or run migrations with seeding
+php artisan migrate --seed
+```
+
+### 3. Key Database Tables
+
+#### Users Table
+- `id` - Primary key
+- `name` - User's full name
+- `email` - User's email address
+- `password` - Hashed password
+- `status` - User role (Guru/Murid)
+- `department` - User's department
+- `phone_number` - Contact number
+- `birth_date` - Date of birth
+- `image_path` - Profile photo path
+
+#### Reports Table
+- `id` - Primary key
+- `item_name` - Name of the lost/found item
+- `reporter_name` - Name of the person reporting
+- `finder_name` - Name of the person who found the item
+- `location` - Where the item was found/lost
+- `last_seen` - Last known location (for lost items)
+- `time_lost` - When the item was lost
+- `time_found` - When the item was found
+- `description` - Detailed description
+- `category` - Item category (Electronics, Accessories, etc.)
+- `brand` - Item brand
+- `size` - Item size
+- `color` - Item color
+- `image_path` - Item photo path
+- `report_type` - Type of report (lost/found)
+
+## Main Entities
+
+### 1. User Entity
+- **Attributes**: name, email, status, department, contact info
+- **Relationships**: 
+  - Has many Reports (as reporter)
+  - Has many Reports (as finder)
+
+### 2. Report Entity
+- **Attributes**: item details, location, timestamps, description, category
+- **Relationships**:
+  - Belongs to User (reporter)
+  - Belongs to User (finder)
+
+## Application Flow
+
+### For Regular Users:
+1. **Login** - Authenticate with credentials
+2. **Home** - View reported items and statistics
+3. **Item Detail** - View details about the lost/found item
+4. **Report Items** - Create new lost/found item reports
+5. **My Reports** - View personal report history
+6. **View All Reports** - Browse all reported items
+7. **Profile Management** - Update personal information
+
+### For Admin Users:
+1. **Admin Dashboard** - Overview with charts and statistics
+2. **User List** - View and manage all users
+3. **Report List** - Manage all item reports
+4. **Analytics** - View reports over time and category distribution
+
+## Key Features Details
+
+### Authentication & Authorization
+- Middleware protection for routes
+- Role-based access control (Guru/Murid)
+- Session-based authentication
+
+### Item Reporting
+- Support for both lost and found items
+- Image upload functionality
+- Categorized item organization
+- Search and filter capabilities
+
+### Admin Features
+- User management with delete functionality
+- Report management with delete capability
+- Statistical dashboard with charts
+- Pagination for large datasets
+
+## Contribution
+We welcome anyone who is interested in contributing to the `Lost and Found Website` to help make it better, more useful, and engaging. Every idea, suggestion, or improvement is highly appreciated!
+
+## Development Team
+- **Project**: Lost and Found System
+- **Purpose**: School item recovery platform
+- **Status**: Active Development
+
+---
+
+*Note: This documentation covers the current state of the application. For the latest updates, refer to the codebase and recent commits.*
