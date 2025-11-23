@@ -14,11 +14,13 @@
         </div>
 
         <nav class="flex flex-col mt-6 px-4 space-y-3">
-            <a href="{{ route('home') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 transition duration-200">Home</a>
-            <a href="{{ route('user.profile') }}" class="bg-white text-black rounded px-3 py-2 font-medium">My Profile</a>
-            <a href="{{ route('report.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 transition duration-200">My Reports</a>
-            <a href="{{ route('report.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 transition duration-200">+ Report New Item</a>
-            <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2 transition duration-200">View All Reports</a>
+            <a href="{{ route('home') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">Home</a>
+            <a href="{{ route('profile') }}" class="bg-white text-black rounded px-3 py-2 font-medium">My Profile</a>
+            <a href="{{ route('reports.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
+            <a href="{{ route('reports.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
+            
+            <!-- View All Reports untuk USER BIASA (hanya lihat) -->
+            <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">View All Reports</a>
         </nav>
 
         <div class="mt-auto p-4 text-sm bg-[#151515] flex items-center justify-between rounded-t-lg">
@@ -89,7 +91,7 @@
                         </div>
 
                         <!-- Form Update Photo - Sejajar kiri -->
-                        <form action="{{ route('user.profile.photo') }}" method="POST" enctype="multipart/form-data" class="mt-8">
+                        <form action="{{ route('profile.photo') }}" method="POST" enctype="multipart/form-data" class="mt-8">
                             @csrf
                             <div class="text-left">
                                 <input type="file" name="profile_picture" id="profile_picture" 

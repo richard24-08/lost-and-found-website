@@ -10,28 +10,29 @@
 <body class="bg-white font-sans min-h-screen flex">
 
     <!-- Sidebar dengan fixed height -->
-    <aside class="w-80 bg-[#212121] text-white flex flex-col h-screen sticky top-0">
+    <aside class="w-80 bg-[#212121] text-white flex flex-col sticky top-0 h-screen">
         <div class="p-4 font-bold text-lg border-b border-gray-700">
             Lost and Found
         </div>
 
         <nav class="flex flex-col mt-6 px-4 space-y-3">
             <a href="{{ route('home') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">Home</a>
-            <a href="{{ route('user.profile') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
-            <a href="{{ route('report.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
-            <a href="{{ route('report.create') }}" class="bg-white text-black rounded px-3 py-2 font-medium">+ Report New Item</a>
+            <a href="{{ route('profile') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
+            <a href="{{ route('reports.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
+            <a href="{{ route('reports.create') }}" class="bg-white text-black rounded px-3 py-2 font-medium">+ Report New Item</a>
+            
+            <!-- View All Reports untuk USER BIASA (hanya lihat) -->
             <a href="{{ route('reports.all') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">View All Reports</a>
         </nav>
 
-        <!-- User info di bagian bawah -->
-        <div class="mt-auto p-4 text-sm bg-[#151515] flex items-center justify-between">
+        <div class="mt-auto p-4 text-sm bg-[#151515] flex items-center justify-between rounded-t-lg">
             <div>
                 <div class="font-medium">{{ auth()->user()->name }}</div>
                 <div class="text-xs text-gray-400">{{ auth()->user()->email }}</div>
             </div>
             <a href="{{ route('logout') }}" 
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-               class="ml-2 text-white">
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+            class="ml-2 text-white">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
@@ -46,7 +47,7 @@
     <main class="flex-1 p-10 overflow-auto">
         <h1 class="text-3xl font-extrabold mb-6">Report Lost Item</h1>
 
-        <form method="POST" action="{{ route('report.store') }}" enctype="multipart/form-data" class="max-w-3xl">
+        <form method="POST" action="{{ route('reports.store') }}" enctype="multipart/form-data" class="max-w-3xl">
             @csrf
             
             <!-- Report Type (hidden) -->

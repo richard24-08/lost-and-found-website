@@ -23,7 +23,28 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('home')->with('success', 'Login successful!');
+            
+            $user = Auth::user();
+            
+            // DEBUG: Lihat data user
+            \Log::info('=== LOGIN DEBUG ===');
+            \Log::info('Email: ' . $user->email);
+            \Log::info('Status: ' . $user->status);
+            \Log::info('Status Type: ' . gettype($user->status));
+            \Log::info('==================');
+            
+            // Case-insensitive check untuk menghindari masalah huruf besar/kecil
+            $status = strtolower(trim($user->status));
+            
+            \Log::info('Cleaned Status: ' . $status);
+            
+            if ($status === 'admin' || $status === 'guru') {
+                \Log::info('🚀 REDIRECTING TO ADMIN DASHBOARD');
+                return redirect()->route('admin.dashboard')->with('success', 'Login successful!');
+            } else {
+                \Log::info('🔙 REDIRECTING TO USER HOME');
+                return redirect()->route('home')->with('success', 'Login successful!');
+            }
         }
 
         return back()->with('error', 'Invalid email or password.');

@@ -10,16 +10,18 @@
 
 <div class="min-h-screen flex">
 
-    <aside class="w-80 bg-[#212121] text-white flex flex-col">
+    <aside class="w-80 bg-[#212121] text-white flex flex-col sticky top-0 h-screen">
         <div class="p-4 font-bold text-lg border-b border-gray-700">
             Lost and Found
         </div>
 
         <nav class="flex flex-col mt-6 px-4 space-y-3">
             <a href="{{ route('home') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">Home</a>
-            <a href="{{ route('user.profile') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
-            <a href="{{ route('report.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
-            <a href="{{ route('report.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
+            <a href="{{ route('profile') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Profile</a>
+            <a href="{{ route('reports.mine') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">My Reports</a>
+            <a href="{{ route('reports.create') }}" class="hover:bg-white hover:text-black rounded px-3 py-2">+ Report New Item</a>
+            
+            <!-- View All Reports untuk USER BIASA (hanya lihat) -->
             <a href="{{ route('reports.all') }}" class="bg-white text-black rounded px-3 py-2 font-medium">View All Reports</a>
         </nav>
 
@@ -29,8 +31,8 @@
                 <div class="text-xs text-gray-400">{{ auth()->user()->email }}</div>
             </div>
             <a href="{{ route('logout') }}" 
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-               class="ml-2 text-white">
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+            class="ml-2 text-white">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
@@ -44,10 +46,6 @@
     <main class="flex-1 p-8">
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-4xl font-extrabold tracking-tight">ALL REPORTS</h1>
-            <div class="flex items-center gap-4">
-                <input type="text" placeholder="Search items..." class="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                <a href="{{ route('report.create') }}" class="bg-black text-white px-4 py-2 rounded-md shadow hover:bg-gray-800 transition">+ Report New Item</a>
-            </div>
         </div>
 
         @if($reports->count() > 0)
@@ -97,7 +95,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <a href="{{ route('report.show', $report) }}" class="w-full bg-black text-white py-3 rounded-lg text-lg font-medium hover:bg-gray-800 transition block text-center">
+                            <a href="{{ route('reports.show', $report) }}" class="w-full bg-black text-white py-3 rounded-lg text-lg font-medium hover:bg-gray-800 transition block text-center">
                                 View Details
                             </a>
                         </div>
@@ -107,9 +105,6 @@
         @else
             <div class="bg-white rounded-lg shadow p-8 text-center">
                 <p class="text-gray-500 text-lg">No reports found.</p>
-                <a href="{{ route('report.create') }}" class="inline-block mt-4 bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition">
-                    + Report New Item
-                </a>
             </div>
         @endif
     </main>

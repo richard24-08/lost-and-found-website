@@ -70,7 +70,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'name' => 'Guru Matematika',
+                'name' => 'Guru',
                 'email' => 'guru@gmail.com',
                 'phone_number' => '081234567890',
                 'password' => Hash::make('guru'),

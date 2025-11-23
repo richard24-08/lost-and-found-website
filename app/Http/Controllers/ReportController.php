@@ -19,6 +19,7 @@ class ReportController extends Controller
                 $query->where('item_name', 'like', "%{$search}%")
                       ->orWhere('description', 'like', "%{$search}%");
             })
+            ->latest()
             ->paginate(10);
 
         return view('home', compact('reports', 'search'));
@@ -59,15 +60,17 @@ class ReportController extends Controller
             return back()->withErrors(['time_found' => 'Waktu penemuan harus diisi untuk laporan penemuan.']);
         }
 
-        $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-        $request->file('image')->move(public_path('images'), $imageName);
-
-        $imagePath = $imageName;
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images'), $imageName);
+            $imagePath = $imageName;
+        }
 
         Report::create([
             'item_name' => $request->item_name,
             'reporter_name' => $request->reporter_name,
-            'finder_name' => $request->finder_name ?? 'Not Applicable', // ⬅️ INI YANG DIPERBAIKI
+            'finder_name' => $request->finder_name ?? 'Not Applicable',
             'location' => $request->location,
             'last_seen' => $request->last_seen,
             'time_lost' => $request->time_lost,
@@ -84,52 +87,22 @@ class ReportController extends Controller
         return redirect()->route('home')->with('success', 'Laporan berhasil dibuat!');
     }
 
-    // Detail laporan (menggunakan route model binding)
+    // Detail laporan
     public function show(Report $report)
     {
-        // Ambil user berdasarkan reporter_name (pemilik asli)
         $user = User::where('name', $report->reporter_name)->first();
-        
-        // ✅ AMBIL USER BERDASARKAN finder_name (yang menemukan)
         $finderUser = User::where('name', $report->finder_name)->first();
 
         return view('itemdetail', compact('report', 'user', 'finderUser'));
     }
 
-    // Hapus laporan
-    public function destroy(Report $report)
+    // Form edit laporan
+    public function edit(Report $report)
     {
-        if ($report->image_path) {
-            Storage::disk('public')->delete($report->image_path);
-        }
-
-        $report->delete();
-
-        return redirect()->back()->with('success', 'Laporan berhasil dihapus');
+        return view('reports.edit', compact('report'));
     }
 
-    // Laporan milik user login - DIPERBAIKI
-    public function myReports()
-    {
-        $user = Auth::user();
-        
-        // Ambil reports yang berhubungan dengan user yang login
-        // Baik sebagai reporter (pelapor) maupun finder (penemu)
-        $reports = Report::where('reporter_name', $user->name)
-                    ->orWhere('finder_name', $user->name)
-                    ->latest()
-                    ->get();
-
-        return view('myreport', compact('reports'));
-    }
-
-    // Halaman semua laporan
-    public function viewAllReports()
-    {
-        $reports = Report::latest()->get();
-        return view('viewallreports', compact('reports'));
-    }
-
+    // Update laporan
     public function update(Request $request, Report $report)
     {
         $request->validate([
@@ -149,5 +122,99 @@ class ReportController extends Controller
             'success' => true, 
             'message' => 'Item status updated to found!'
         ]);
+    }
+
+    // Hapus laporan
+    public function destroy(Report $report)
+    {
+        if ($report->image_path) {
+            // Hapus gambar dari storage
+            $imagePath = public_path('images/' . $report->image_path);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        $report->delete();
+
+        return redirect()->back()->with('success', 'Laporan berhasil dihapus');
+    }
+
+    // Laporan milik user login
+    public function myReports()
+    {
+        $user = Auth::user();
+        
+        $reports = Report::where('reporter_name', $user->name)
+                    ->orWhere('finder_name', $user->name)
+                    ->latest()
+                    ->get();
+
+        return view('myreport', compact('reports'));
+    }
+
+    // Halaman semua laporan
+    public function viewAllReports()
+    {
+        $reports = Report::latest()->get();
+        return view('viewallreports', compact('reports'));
+    }
+
+    // =======================
+    // METHOD UNTUK REPORT LIST
+    // =======================
+
+    /**
+     * Menampilkan daftar semua laporan untuk admin
+     */
+    public function reportList(Request $request)
+    {
+        $search = $request->input('search');
+        $type = $request->input('type');
+        $category = $request->input('category');
+
+        $reports = Report::with(['reporter', 'finder'])
+            ->when($search, function($query, $search) {
+                $query->search($search);
+            })
+            ->when($type, function($query, $type) {
+                $query->byType($type);
+            })
+            ->when($category, function($query, $category) {
+                $query->byCategory($category);
+            })
+            ->latest()
+            ->paginate(10);
+
+        $categories = Report::distinct()->pluck('category');
+        $reportTypes = Report::getReportTypeOptions();
+
+        return view('reportlist', compact('reports', 'search', 'type', 'category', 'categories', 'reportTypes'));
+    }
+
+    /**
+     * Menampilkan laporan kehilangan saja
+     */
+    public function lostReports()
+    {
+        $reports = Report::with(['reporter', 'finder'])
+            ->lost()
+            ->latest()
+            ->paginate(10);
+
+        return view('reportlist', compact('reports'))->with('type', 'lost');
+    }
+
+    /**
+     * Menampilkan laporan penemuan saja
+     */
+    public function foundReports()
+    {
+        $reports = Report::with(['reporter', 'finder'])
+            ->found()
+            ->latest()
+            ->paginate(10);
+
+        return view('reportlist', compact('reports'))->with('type', 'found');
     }
 }
