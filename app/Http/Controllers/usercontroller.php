@@ -105,7 +105,7 @@ class UserController extends Controller
         $user->image_path = $imagePath;
         $user->save();
 
-        return redirect()->route('user.profile')
+        return redirect()->route('profile')
             ->with('success', 'Profile picture updated successfully!');
     }
 
