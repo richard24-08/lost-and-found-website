@@ -57,7 +57,7 @@
 
     <!-- Main content dengan scroll independent -->
     <main class="flex-1 p-10 overflow-auto">
-        <h1 class="text-6xl font-extrabold mb-8 uppercase">REPORT LOST ITEM</h1>
+        <h1 class="text-6xl font-extrabold mb-8 uppercase">REPORT NEW ITEM</h1>
 
         <form method="POST" action="{{ route('reports.store') }}" enctype="multipart/form-data" class="max-w-3xl">
             @csrf

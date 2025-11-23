@@ -218,44 +218,51 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal - Diperlebar -->
     <div id="foundModal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
         <div id="foundOverlay" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>
 
-        <div class="relative bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full max-w-2xl mx-4 p-8 z-10">
-            <div class="flex items-start justify-between mb-6">
-                <h3 class="text-3xl font-semibold text-black">You found this item ?</h3>
-                <button type="button" aria-label="Close" class="text-gray-500 hover:text-gray-800 text-2xl" onclick="closeFoundModal()">
+        <div class="relative bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-full max-w-4xl mx-8 p-10 z-10">
+            <div class="flex items-start justify-between mb-8">
+                <h3 class="text-4xl font-bold text-black">You found this item?</h3>
+                <button type="button" aria-label="Close" class="text-gray-500 hover:text-gray-800 text-3xl" onclick="closeFoundModal()">
                     ✕
                 </button>
             </div>
 
-            <form id="foundForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl">
+            <form id="foundForm" class="space-y-8 text-2xl">
                 @csrf
-                <div class="space-y-6">
+                <div class="space-y-8">
                     <div>
-                        <label class="text-xl font-medium text-black">What's your name?</label>
-                        <input name="finder_name" type="text" required class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-xl" />
+                        <label class="text-2xl font-medium text-black block mb-4">What's your name?</label>
+                        <input name="finder_name" type="text" required 
+                               class="w-full rounded-lg border border-gray-300 px-6 py-4 text-2xl" />
                     </div>
 
                     <div>
-                        <label class="text-xl font-medium text-black">Where do you found this item?</label>
-                        <input name="location" type="text" required class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-xl" />
+                        <label class="text-2xl font-medium text-black block mb-4">Where do you found this item?</label>
+                        <input name="location" type="text" required 
+                               class="w-full rounded-lg border border-gray-300 px-6 py-4 text-2xl" />
                     </div>
 
-                    <div>
-                        <label class="text-xl font-medium text-black">When do you find this item?</label>
-                        <input name="date_found" type="date" class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-xl" />
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="text-2xl font-medium text-black block mb-4">When do you find this item?</label>
+                            <input name="date_found" type="date" 
+                                   class="w-full rounded-lg border border-gray-300 px-6 py-4 text-2xl" />
+                        </div>
 
-                    <div>
-                        <label class="text-xl font-medium text-black">What time?</label>
-                        <input name="time_found" type="time" class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-xl" />
+                        <div>
+                            <label class="text-2xl font-medium text-black block mb-4">What time?</label>
+                            <input name="time_found" type="time" 
+                                   class="w-full rounded-lg border border-gray-300 px-6 py-4 text-2xl" />
+                        </div>
                     </div>
                 </div>
 
-                <div class="md:col-span-2 flex justify-center pt-4">
-                    <button type="submit" class="px-8 py-4 bg-black text-white rounded-lg font-semibold text-2xl w-1/2 md:w-1/3 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+                <div class="flex justify-center pt-6">
+                    <button type="submit" 
+                            class="px-12 py-5 bg-black text-white rounded-lg font-semibold text-3xl w-full md:w-2/3 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] hover:bg-gray-800 transition">
                         Submit Report
                     </button>
                 </div>
